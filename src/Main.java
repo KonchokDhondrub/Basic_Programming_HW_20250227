@@ -13,7 +13,8 @@ public class Main {
         List<String> mergedString = mergeStrings(map);
         System.out.println("Merged: " + mergedString);
 
-        Map<String, String> unmergedStrings = unmergedStrings(mergedString)
+        Map<String, String> unmergedStrings = unmergedStrings(mergedString);
+        System.out.println(unmergedStrings);
 
     }
 
@@ -26,9 +27,19 @@ public class Main {
     }
 
     public static Map<String, String> unmergedStrings(List<String> mergedString) {
-        List<String> result = new ArrayList<>();
-        for (var str : map.entrySet()) {
-            result.add(str.getKey() + ":" + str.getValue());
+        Map<String, String> result = new HashMap<>();
+        for (var str : mergedString) {
+            String[] split = str.split(":");
+            String a = "";
+            String b = "";
+            for (String spl : split) {
+                if (a.isBlank()) {
+                    a = spl;
+                } else {
+                    b = spl;
+                }
+            }
+            result.put(a, b);
         }
         return result;
     }
