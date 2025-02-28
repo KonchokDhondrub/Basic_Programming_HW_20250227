@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,8 +11,12 @@ public class Main {
         System.out.println("Merged: " + mergedString);
 
         mergedString.add("john:ееееее");
+        mergedString.add("john:drgsgsdsd");
         Map<String, String> unmergedStrings = unmergedStrings(mergedString);
         System.out.println("unMerged: " + unmergedStrings);
+
+        Map<String, List<String>> mergedListAndMap = mergerListInMap(unmergedStrings);
+        System.out.println("Merged List in Map: " + mergedListAndMap);
 
     }
 
@@ -35,7 +36,17 @@ public class Main {
             String newValue = split[1];
             String value = result.get(key);
 
-            result.put(key, value==null? newValue : value + "," + newValue);
+            result.put(key, value==null ? newValue : value + ";" + newValue);
+        }
+        return result;
+    }
+
+    public static Map<String, List<String>> mergerListInMap(Map<String, String> map){
+        Map<String, List<String>> result = new HashMap<>();
+        for (var entry : map.entrySet()) {
+            String key = entry.getKey();
+            List<String> value = Arrays.asList(entry.getValue().split(";"));
+            result.put(key,value);
         }
         return result;
     }
