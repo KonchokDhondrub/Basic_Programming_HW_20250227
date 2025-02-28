@@ -36,7 +36,7 @@ public class Main {
             String newValue = split[1];
             String value = result.get(key);
 
-            result.put(key, value==null ? newValue : value + ";" + newValue);
+            result.put(key, value==null ? newValue : value + "|" + newValue);
         }
         return result;
     }
@@ -45,7 +45,7 @@ public class Main {
         Map<String, List<String>> result = new HashMap<>();
         for (var entry : map.entrySet()) {
             String key = entry.getKey();
-            List<String> value = Arrays.asList(entry.getValue().split(";"));
+            List<String> value = Arrays.asList(entry.getValue().split("\\|"));
             result.put(key,value);
         }
         return result;
