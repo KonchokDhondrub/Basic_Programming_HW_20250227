@@ -13,8 +13,9 @@ public class Main {
         List<String> mergedString = mergeStrings(map);
         System.out.println("Merged: " + mergedString);
 
+        mergedString.add("john:ееееее");
         Map<String, String> unmergedStrings = unmergedStrings(mergedString);
-        System.out.println(unmergedStrings);
+        System.out.println("unMerged: " + unmergedStrings);
 
     }
 
@@ -30,16 +31,11 @@ public class Main {
         Map<String, String> result = new HashMap<>();
         for (var str : mergedString) {
             String[] split = str.split(":");
-            String a = "";
-            String b = "";
-            for (String spl : split) {
-                if (a.isBlank()) {
-                    a = spl;
-                } else {
-                    b = spl;
-                }
-            }
-            result.put(a, b);
+            String key = split[0];
+            String newValue = split[1];
+            String value = result.get(key);
+
+            result.put(key, value==null? newValue : value + "," + newValue);
         }
         return result;
     }
