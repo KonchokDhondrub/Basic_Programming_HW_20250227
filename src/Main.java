@@ -15,9 +15,9 @@ public class Main {
         Map<String, String> unmergedStrings = unmergedStrings(mergedString);
         System.out.println("unMerged: " + unmergedStrings);
 
-        Map<String, List<String>> mergedListAndMap = mergerListInMap(unmergedStrings);
-        System.out.println("Merged List in Map: " + mergedListAndMap);
-
+        System.out.println("Merged List in Map 1: " + mergerListInMap(unmergedStrings));
+        System.out.println("Merged List in Map 2: " + mergerListInMap2(mergedString));
+        System.out.println("Merged List in Map 3: " + mergerListInMap3(mergedString));
     }
 
     public static List<String> mergeStrings(Map<String, String> map) {
@@ -44,9 +44,40 @@ public class Main {
     public static Map<String, List<String>> mergerListInMap(Map<String, String> map){
         Map<String, List<String>> result = new HashMap<>();
         for (var entry : map.entrySet()) {
-            String key = entry.getKey();
-            List<String> value = Arrays.asList(entry.getValue().split("\\|"));
-            result.put(key,value);
+            result.put(entry.getKey(),
+                    Arrays.asList(entry.getValue().split("\\|")));
+        }
+        return result;
+    }
+
+    public static Map<String, List<String>> mergerListInMap2(List<String> list){
+        Map<String, List<String>> result = new HashMap<>();
+        for (var str : list) {
+            String[] split = str.split(":");
+            String key = split[0];
+            String newValue = split[1];
+
+            List<String> valueList = new ArrayList<>();
+            List<String> oldValueList = result.putIfAbsent(key, valueList);
+            if (oldValueList == null){
+                valueList.add(newValue);
+            } else {
+                oldValueList.add(newValue);
+            }
+        }
+        return result;
+    }
+
+    public static Map<String, List<String>> mergerListInMap3(List<String> list){
+        Map<String, List<String>> result = new HashMap<>();
+        for (var str : list) {
+            String[] split = str.split(":");
+            String key = split[0];
+            String newValue = split[1];
+
+            List<String> valueList = result.getOrDefault(key, new ArrayList<>());
+            valueList.add(newValue);
+            result.put(key, valueList);
         }
         return result;
     }
